@@ -42,9 +42,6 @@ public class ShareController {
     @GetMapping("/")
     public ResponseEntity test() throws IOException {
         try {
-            if(6>5) {
-                throw new IllegalArgumentException("mega ERROR");
-            }
             return ResponseEntity.ok("it works");
         } catch (Exception e) {
             throw new RuntimeException("application error");
@@ -57,19 +54,8 @@ public class ShareController {
             shareService.initBase();
             return ResponseEntity.ok().body("shares download");
         } catch (IOException e) {
-            throw new RuntimeException("error");
+            throw new RuntimeException("shares error");
         }
-    }
-
-    @ExceptionHandler(value = {NullPointerException.class, IllegalArgumentException.class})
-    public void handleException(Exception e, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setStatus(HttpStatus.BAD_REQUEST.value());
-        response.setContentType("application/json");
-        response.getWriter().write(objectMapper.writeValueAsString(new HashMap<>() {{
-            put("message", e.getMessage());
-            put("details", "go to deBug");
-        }}));
-        LOGGER.error(e.getLocalizedMessage());
     }
 
 
@@ -83,6 +69,4 @@ public class ShareController {
                 .map(share -> modelMapper.map(share, ShareDto.class))
                 .collect(Collectors.toList());
     }
-
-
 }

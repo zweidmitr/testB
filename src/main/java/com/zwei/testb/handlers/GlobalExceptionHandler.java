@@ -23,12 +23,12 @@ public class GlobalExceptionHandler {
         this.objectMapper = objectMapper;
     }
 
-    @ExceptionHandler(value = {Exception.class})
+    @ExceptionHandler(value = {RuntimeException.class})
     public void handleException(Exception e, HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setStatus(HttpStatus.BAD_REQUEST.value());
         response.setContentType("application/json");
         response.getWriter().write(objectMapper.writeValueAsString(new HashMap<>() { {
-            put("message", "this is test exceptionHandler");
+            put("message", "this is RuntimeException");
             put("details", e.getMessage());
         }}));
         LOGGER.error(e.getMessage());
