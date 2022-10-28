@@ -37,7 +37,7 @@ public class ShareController {
     public ResponseEntity initBase() throws IOException {
         try {
             shareService.initBase();
-            return ResponseEntity.ok("shares download");
+            return ResponseEntity.ok().body("shares download");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("error");
         }
