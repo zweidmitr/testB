@@ -11,11 +11,8 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DataSetDto {
-    private int id;
-
-    private Share share;
-
-    private Double price;
 
     private Date time;
+
+    private Double price;
 }
