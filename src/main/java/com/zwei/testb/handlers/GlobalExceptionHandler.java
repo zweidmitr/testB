@@ -23,12 +23,12 @@ public class GlobalExceptionHandler {
         this.objectMapper = objectMapper;
     }
 
-    @ExceptionHandler(value = {NullPointerException.class})
+    @ExceptionHandler(value = {Exception.class})
     public void handleException(Exception e, HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setStatus(HttpStatus.BAD_REQUEST.value());
         response.setContentType("application/json");
         response.getWriter().write(objectMapper.writeValueAsString(new HashMap<>() { {
-            put("message", "Some of fields empty");
+            put("message", "this is test exceptionHandler");
             put("details", e.getMessage());
         }}));
         LOGGER.error(e.getMessage());

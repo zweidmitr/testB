@@ -34,6 +34,9 @@ public class ShareController {
     @GetMapping("/")
     public ResponseEntity test() throws IOException {
         try {
+            if(6>5) {
+                throw new IllegalArgumentException("Invalid username or password");
+            }
             return ResponseEntity.ok("it works");
         } catch (Exception e) {
             throw new RuntimeException("application error");
