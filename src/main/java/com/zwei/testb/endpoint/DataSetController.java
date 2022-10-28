@@ -31,7 +31,7 @@ public class DataSetController {
             dataSetService.loadDataSets();
             return ResponseEntity.ok().body("dataSet load");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("DataSets error");
+            throw new RuntimeException("DataSets error");
         }
     }
 

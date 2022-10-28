@@ -34,10 +34,9 @@ public class ShareController {
     @GetMapping("/")
     public ResponseEntity test() throws IOException {
         try {
-            shareService.initBase();
             return ResponseEntity.ok("it works");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("init error");
+            throw new RuntimeException("application error");
         }
     }
 
@@ -46,12 +45,10 @@ public class ShareController {
         try {
             shareService.initBase();
             return ResponseEntity.ok().body("shares download");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("error");
+        } catch (IOException e) {
+            throw new RuntimeException("error");
         }
     }
-
-
 
 
     @GetMapping("/companies")

@@ -1,2 +1,3 @@
 drop table shares cascade;
-drop table datasets cascade;
+drop table dat
+    asets cascade;
