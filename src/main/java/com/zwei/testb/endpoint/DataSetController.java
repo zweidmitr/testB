@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,13 +26,13 @@ public class DataSetController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @GetMapping("/loadData")
+    @PostConstruct
     public ResponseEntity loadDataSets() {
         try {
             dataSetService.loadDataSets();
             return ResponseEntity.ok().body("dataSet load");
         } catch (Exception e) {
-            throw new RuntimeException("DataSets error");
+            throw new RuntimeException(e);
         }
     }
 

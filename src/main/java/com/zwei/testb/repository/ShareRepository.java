@@ -12,6 +12,6 @@ import java.util.List;
 public interface ShareRepository extends CrudRepository<Share, String> {
     Page<Share> findAll(Pageable giveMePage);
 
-    @Query("select distinct s from Share s")
+    @Query("select s from Share s")
     List<Share> findAllShare();
 }

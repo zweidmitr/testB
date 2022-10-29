@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -32,23 +33,13 @@ import java.util.stream.Collectors;
 public class ShareController {
 
     private final ShareService shareService;
-    private final DataSetService dataSetService;
 
     @Autowired
     private ModelMapper modelMapper;
     private final ObjectMapper objectMapper;
     private static final Logger LOGGER = LoggerFactory.getLogger(ShareController.class.getSimpleName());
 
-    @GetMapping("/")
-    public ResponseEntity test() throws IOException {
-        try {
-            return ResponseEntity.ok("it works");
-        } catch (Exception e) {
-            throw new RuntimeException("application error");
-        }
-    }
-
-    @GetMapping("/init")
+    @PostConstruct
     public ResponseEntity initBase() throws IOException {
         try {
             shareService.initBase();
@@ -58,11 +49,10 @@ public class ShareController {
         }
     }
 
-
     @GetMapping("/companies")
-    public List<ShareDto> giveMe(HttpServletRequest request) {
-        int page = Integer.parseInt(request.getParameter("page"));
-        int size = Integer.parseInt(request.getParameter("size"));
+    public List<ShareDto> giveMe(@RequestParam("page") String pageSt, @RequestParam("size") String sizeSt) {
+        int page = Integer.parseInt(pageSt);
+        int size = Integer.parseInt(sizeSt);
         Page<Share> pageList = shareService.getPages(page, size);
 
         return pageList.getContent().stream()
