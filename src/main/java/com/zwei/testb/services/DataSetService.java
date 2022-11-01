@@ -9,6 +9,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -23,26 +24,12 @@ public class DataSetService {
     private final DataSetRepository dataSetRepo;
     private final ShareRepository shareRepo;
 
-    public void loadDataSets() {
-        int time = 1000 * 20; // 1000*60*10;
-        Thread run = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        List<String> tickers = getTickers();
-                        for (String tik : tickers) {
-                            parseJson(tik);
-                        }
 
-                        Thread.sleep(time);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-        run.start();
+    public void loadDataSets() throws MalformedURLException, ParseException {
+        List<String> tickers = getTickers();
+        for (String tik : tickers) {
+            parseJson(tik);
+        }
     }
 
     public List<DataSet> getDataSets(String ticker) {
@@ -52,6 +39,7 @@ public class DataSetService {
     public List<String> getTickers() {
         return shareRepo.findAllShare().stream().map(Share::getTicker).toList();
     }
+
     public void parseJson(String ticker) throws MalformedURLException, ParseException {
         String urlString = String.format("https://query1.finance.yahoo.com/v8/finance/chart/%s", ticker);
         Object obj = new JSONParser().parse(stream(urlString));

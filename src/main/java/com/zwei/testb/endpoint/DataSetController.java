@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +27,7 @@ public class DataSetController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @PostConstruct
+    @Scheduled(initialDelay = 5_000L, fixedDelay = 20_000L)
     public ResponseEntity loadDataSets() {
         try {
             dataSetService.loadDataSets();

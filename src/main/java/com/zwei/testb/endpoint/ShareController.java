@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
@@ -39,7 +40,7 @@ public class ShareController {
     private final ObjectMapper objectMapper;
     private static final Logger LOGGER = LoggerFactory.getLogger(ShareController.class.getSimpleName());
 
-    @PostConstruct
+    @Scheduled(initialDelay = 1_000L, fixedDelay = 86400_000L)
     public ResponseEntity initBase() throws IOException {
         try {
             shareService.initBase();
@@ -50,9 +51,7 @@ public class ShareController {
     }
 
     @GetMapping("/companies")
-    public List<ShareDto> giveMe(@RequestParam("page") String pageSt, @RequestParam("size") String sizeSt) {
-        int page = Integer.parseInt(pageSt);
-        int size = Integer.parseInt(sizeSt);
+    public List<ShareDto> giveMe(@RequestParam("page") int page, @RequestParam("size") int size) {
         Page<Share> pageList = shareService.getPages(page, size);
 
         return pageList.getContent().stream()
