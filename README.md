@@ -7,10 +7,10 @@
 3. Отдача по api методов на фронт
 
 
-1. Автоматически -сбор информации о компаниях с первой страницы https://finviz.com/screener.ashx?v=111&f=idx_sp500&o=-marketcap
+Автоматический сбор информации о компаниях с первой страницы https://finviz.com/screener.ashx?v=111&f=idx_sp500&o=-marketcap
 (Ticker, Company, Sector, Industry), сбор данных по ценам с yahoo-finance
 
-2. api
+### api
 /api/companies?page=0&size=20 - получить список компаний постранично с page и size
 
 /api/companies/{ticker}/prices - получить всю историю изменения цены по одной акции
